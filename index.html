@@ -1,13 +1,95 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>pokedex-explorer</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pokédex Explorer</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <!-- Header & Pencarian -->
+  <header>
+    <h1>Pokédex Explorer</h1>
+    <form id="search-form">
+      <input type="text" id="search-input" placeholder="Cari nama Pokémon (misal: pikachu)..." required>
+      <button type="submit" id="search-btn">Cari</button>
+    </form>
+  </header>
+
+  <main>
+    <!-- State Loading -->
+    <div id="loading-state" class="state-container hidden">
+      <div class="spinner"></div>
+      <p>Memuat data Pokémon...</p>
+    </div>
+
+    <!-- State Error / Empty -->
+    <div id="error-state" class="state-container hidden">
+      <p id="error-message">Pokémon tidak ditemukan.</p>
+      <button id="reset-btn">Kembali</button>
+    </div>
+
+    <!-- Grid Card Pokémon -->
+    <div id="pokemon-grid" class="grid-container">
+      <!-- Dummy Card (Untuk preview UI, nanti akan di-overwrite oleh JS Anggota 2/3) -->
+      <div class="pokemon-card">
+        <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png"
+          alt="bulbasaur">
+        <h3>bulbasaur</h3>
+        <div class="types-container">
+          <span class="badge type-grass">grass</span>
+          <span class="badge type-poison">poison</span>
+        </div>
+      </div>
+      <div class="pokemon-card">
+        <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/4.png"
+          alt="charmander">
+        <h3>charmander</h3>
+        <div class="types-container">
+          <span class="badge type-fire">fire</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pagination -->
+    <div class="pagination">
+      <button id="prev-btn" disabled>&#8592; Sebelumnya</button>
+      <button id="next-btn">Berikutnya &#8594;</button>
+    </div>
+  </main>
+
+  <!-- Modal Detail Pokémon -->
+  <div id="pokemon-modal" class="modal hidden">
+    <div class="modal-content">
+      <button id="close-modal" class="close-btn">&times;</button>
+
+      <div class="modal-header">
+        <img id="modal-img" src="" alt="Pokemon Image">
+        <h2 id="modal-name">Nama Pokemon</h2>
+        <div id="modal-types" class="types-container"></div>
+      </div>
+
+      <div class="modal-body">
+        <div class="info-group">
+          <p><strong>Tinggi:</strong> <span id="modal-height">-</span> m</p>
+          <p><strong>Berat:</strong> <span id="modal-weight">-</span> kg</p>
+          <p><strong>Abilities:</strong> <span id="modal-abilities">-</span></p>
+        </div>
+
+        <div class="stats-group">
+          <h3>Base Stats</h3>
+          <ul id="modal-stats">
+            <!-- Dummy Stats untuk preview -->
+            <li>hp: 45</li>
+            <li>attack: 49</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+
 </html>
